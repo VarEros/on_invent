@@ -38,10 +38,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
       appBar: AppBar(
         title: Text(widget.category != null ? 'Editar Categoria' : 'Agregar Categoría'),
       ),
-      body: Form(
-        key: _formKey,
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Form(
+          key: _formKey,
           child: Column(
             children: [
               TextFormField(
@@ -85,27 +85,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     Navigator.of(context).pop();
                   }
                   if (widget.category != null) {
-                  //   showDialog(context: context, builder:(context) {
-                  //     return AlertDialog(
-                  //       title: const Text('Eliminar categoría'),
-                  //       content: const Text('¿Estás seguro de que deseas eliminar esta categoría?'),
-                  //       actions: [
-                  //         TextButton(
-                  //           onPressed: () {
-                  //             // Delete category
-                  //             Navigator.of(context).pop();
-                  //           },
-                  //           child: const Text('Sí'),
-                  //         ),
-                  //         TextButton(
-                  //           onPressed: () {
-                  //             Navigator.of(context).pop();
-                  //           },
-                  //           child: const Text('No'),
-                  //         ),
-                  //       ],
-                  //     );
-                    // });
+                    // Update category
                   } else {
                     // Add category
                   }

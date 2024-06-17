@@ -24,18 +24,20 @@ class _ProductScreenState extends State<ProductScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Producto'),
-      ),
-      body: Column(
-        children: [
-          imageFile == null ? const Text('No image selected.') : Image.file(File(imageFile!.path)),
-          ElevatedButton(
-            onPressed: _getImage,
-            child: const Text('Select Image'),
-          ),
-        ],
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Form(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            // imageFile == null ? const Text('No image selected.') : Image.file(File(imageFile!.path), height: 100, width: 100),
+            imageFile == null ? const Text('No image selected.') : Text(imageFile!.name),
+            ElevatedButton(
+              onPressed: _getImage,
+              child: const Text('Select Image'),
+            ),
+          ],
+        ),
       ),
     );
   }
