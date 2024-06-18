@@ -3,7 +3,6 @@ import '../data/category_data.dart';
 import '../models/category.dart';
 import '../widgets/category_elem_widget.dart';
 
-import 'category_screen.dart';
 
 class CategoryListScreen extends StatefulWidget {
   const CategoryListScreen({super.key});

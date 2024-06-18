@@ -7,8 +7,13 @@ class ProductElemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context){
-    return ListTile(
-
+    return Card(
+      child: ListTile(
+        leading: Image.network(product.imageUrl),
+        title: Text(product.name),
+        subtitle: Text(product.description),
+        trailing: Text('\$${product.sellingPrice}'),
+      ),
     );
   }
 }

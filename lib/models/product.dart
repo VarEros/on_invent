@@ -3,7 +3,8 @@ class Product {
   final int categoryId;
   final String name;
   final String description;
-  final double price;
+  final double sellingPrice;
+  final double buyingPrice;
   final String imageUrl;
 
   Product({
@@ -11,7 +12,8 @@ class Product {
     required this.categoryId,
     required this.name,
     required this.description,
-    required this.price,
+    required this.sellingPrice,
+    required this.buyingPrice,
     required this.imageUrl,
   });
 }
