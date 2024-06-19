@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:on_invent/screens/category_list_screen.dart';
 import 'package:on_invent/screens/category_screen.dart';
-import 'package:on_invent/screens/product_screen.dart';
+import 'package:on_invent/screens/product_list_screen.dart';
 
 class Screen extends StatefulWidget {
   const Screen({super.key});
@@ -38,7 +38,7 @@ class _ScreenState extends State<Screen> {
         ),
         body: <Widget>[
           const CategoryListScreen(),
-          const ProductScreen(),
+          const ProductListScreen(),
         ][currentPageIndex],
         floatingActionButton: currentPageIndex == 0 ? FloatingActionButton(
           onPressed: () {

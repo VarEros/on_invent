@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconpicker/flutter_iconpicker.dart';
+import 'package:on_invent/data/category_data.dart';
 import 'package:on_invent/data/icon_data.dart';
 
 import '../models/category.dart';
@@ -33,6 +34,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
   @override
   Widget build(BuildContext context) {
+    String name = '';
+    String description = '';
 
     return Scaffold(
       appBar: AppBar(
@@ -46,6 +49,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
             children: [
               TextFormField(
                 initialValue: widget.category != null ? widget.category!.name : '',
+                onChanged: (value) => name = value,
                 decoration: const InputDecoration(
                   labelText: 'Nombre',
                 ),
@@ -54,6 +58,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
               const SizedBox(height: 16),
               TextFormField(
                 initialValue: widget.category != null ? widget.category!.description : '',
+                onChanged: (value) => description = value,
                 decoration: const InputDecoration(
                   labelText: 'Descripción',
                 ),
@@ -80,15 +85,14 @@ class _CategoryScreenState extends State<CategoryScreen> {
               InkWell(
                 
                 onTap: () {
-                  if (_formKey.currentState!.validate()) {
+                  if (!_formKey.currentState!.validate()) {return;}
                     // Save category
-                    Navigator.of(context).pop();
-                  }
                   if (widget.category != null) {
                     // Update category
                   } else {
-                    // Add category
+                    
                   }
+                  Navigator.of(context).pop();
                 },
                 child: Container(
                   width: double.infinity,
