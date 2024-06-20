@@ -59,7 +59,7 @@ class _ScreenState extends State<Screen> {
             if (currentPageIndex <= 1) FloatingActionButton(
               onPressed: () {
                 Navigator.push(
-                  context,
+                  context, 
                   MaterialPageRoute(builder: (context) => currentPageIndex == 0 ? const CategoryScreen(category: null) : const ProductScreen(product: null)),
                 );
               },
