@@ -8,16 +8,19 @@ class ProductCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context){
-    return InkResponse(
-      child: GridTile(
-        footer: GridTileBar(
-          backgroundColor: Colors.black45,
-          title: Text(product.name),
-          subtitle: Text('\$${product.sellingPrice}'),
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(10),
+      child: InkResponse(
+        child: GridTile(
+          footer: GridTileBar(
+            backgroundColor: Colors.black45,
+            title: Text(product.name),
+            subtitle: Text('\$${product.sellingPrice}'),
+          ),
+          child: Image.asset(product.imageUrl, fit: BoxFit.cover), 
         ),
-        child: Image.asset(product.imageUrl, fit: BoxFit.cover), 
+        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ProductScreen(product: product))),
       ),
-      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ProductScreen(product: product))),
     );
   }
 }

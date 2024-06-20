@@ -9,7 +9,7 @@ class ProductElemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context){
     return ListTile(
-      leading: Image.asset(product.imageUrl),
+      leading: ClipRRect(borderRadius: BorderRadius.circular(10), child: Image.asset(product.imageUrl)),
       title: Text(product.name),
       subtitle: Text(product.description),
       trailing: Text('\$${product.sellingPrice}'),

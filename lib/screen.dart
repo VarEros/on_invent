@@ -13,8 +13,8 @@ class Screen extends StatefulWidget {
 }
 
 class _ScreenState extends State<Screen> {
-  int currentPageIndex = 0;
-  bool isGridView = false;
+  int currentPageIndex = 1;
+  bool isGridView = true;
   
   static const pages =  [
     'Categorias',
