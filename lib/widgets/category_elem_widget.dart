@@ -13,9 +13,7 @@ class CategoryElemWidget extends StatelessWidget {
       leading: Icon(IconData(category.icon, fontFamily: 'MaterialIcons')),
       title: Text(category.name),
       subtitle: Text(category.description),
-      onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => CategoryScreen(category: category)));
-      },
+      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => CategoryScreen(category: category))),
     );
   }
 }

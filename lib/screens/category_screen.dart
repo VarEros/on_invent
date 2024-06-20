@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconpicker/flutter_iconpicker.dart';
-import 'package:on_invent/data/category_data.dart';
 import 'package:on_invent/data/icon_data.dart';
 
 import '../models/category.dart';

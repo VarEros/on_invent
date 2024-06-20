@@ -3,8 +3,8 @@ class Product {
   final int categoryId;
   final String name;
   final String description;
-  final double sellingPrice;
-  final double buyingPrice;
+  final int sellingPrice;
+  final int buyingPrice;
   final String imageUrl;
 
   Product({
