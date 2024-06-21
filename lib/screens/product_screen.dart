@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:on_invent/data/category_data.dart';
 import 'package:on_invent/models/category.dart';
 import 'package:on_invent/models/product.dart';
+import 'package:on_invent/widgets/inventary_dialog.dart';
 
 class ProductScreen extends StatefulWidget {
   final Product? product;
@@ -16,6 +17,7 @@ class ProductScreen extends StatefulWidget {
 
 class _ProductScreenState extends State<ProductScreen> {
   final imagePicker = ImagePicker();
+  final _formKey = GlobalKey<FormState>();
   XFile? imageFile;
   final categoryList = CategoryData().categories;
   final categoriesOfProduct = [1,2,4];
@@ -53,6 +55,7 @@ class _ProductScreenState extends State<ProductScreen> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
+          key: _formKey,
           child: Column(
             children: [
               TextFormField(
@@ -62,6 +65,7 @@ class _ProductScreenState extends State<ProductScreen> {
                   labelText: 'Nombre',
                 ),
                 validator: (value) => value!.isEmpty ? 'Por favor, ingrese un nombre' : null,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
               ),
               const SizedBox(height: 16),
               TextFormField(
@@ -71,6 +75,7 @@ class _ProductScreenState extends State<ProductScreen> {
                   labelText: 'Descripción',
                 ),
                 validator: (value) => value!.isEmpty ? 'Por favor, ingrese una descripción' : null,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
               ),
               const SizedBox(height: 16),
               TextFormField(
@@ -83,6 +88,7 @@ class _ProductScreenState extends State<ProductScreen> {
                 keyboardType: TextInputType.number,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 validator: (value) => value!.isEmpty ? 'Por favor, ingrese un precio de compra' : null,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
               ),
               const SizedBox(height: 16),
               TextFormField(
@@ -102,6 +108,7 @@ class _ProductScreenState extends State<ProductScreen> {
                   }
                   return null;
                 },
+                autovalidateMode: AutovalidateMode.onUserInteraction,
               ),
               const SizedBox(height: 16),
               Row( 
@@ -135,6 +142,35 @@ class _ProductScreenState extends State<ProductScreen> {
                     child: const Text('Select Image'),
                   ),
                 ],
+              ),
+              const SizedBox(height: 32),
+              InkWell(  
+                onTap: () {
+                  if (!_formKey.currentState!.validate()) {return;}
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) => const InventaryDialog(),
+                    ).then((value) {
+                      if (widget.product != null) {
+                        // Update category
+                      } else {
+
+                      }
+                      Navigator.of(context).pop();
+                    });
+                },
+                child: Container(
+                  width: double.infinity,
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.all(12),
+                  decoration: ShapeDecoration(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    color: Theme.of(context).colorScheme.primaryContainer,
+                  ),
+                  child: Text(widget.product != null ? 'Guardar cambios' : 'Guardar producto'),
+                ),
               ),
             ],
           ),

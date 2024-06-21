@@ -53,6 +53,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   labelText: 'Nombre',
                 ),
                 validator: (value) => value!.isEmpty ? 'Por favor, ingrese un nombre' : null,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
               ),
               const SizedBox(height: 16),
               TextFormField(
@@ -62,6 +63,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   labelText: 'Descripción',
                 ),
                 validator: (value) => value!.isEmpty ? 'Por favor, ingrese una descripción' : null,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
               ),
               const SizedBox(height: 16),
               Row(

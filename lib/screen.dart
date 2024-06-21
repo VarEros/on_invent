@@ -18,7 +18,7 @@ class _ScreenState extends State<Screen> {
   
   static const pages =  [
     'Categorias',
-    'Productos',
+    'Productos'
   ];
   
   @override

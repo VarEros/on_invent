@@ -9,8 +9,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_iconpicker: ^3.4.5
+  flutter_iconpicker: ^3.3.3
   image_picker: ^1.1.2
+  quantity_input: ^1.0.2
 
 dev_dependencies:
   flutter_lints: ^3.0.0
