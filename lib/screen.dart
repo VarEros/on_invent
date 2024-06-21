@@ -26,6 +26,16 @@ class _ScreenState extends State<Screen> {
     return Scaffold(
         appBar: AppBar(
           title: Text(pages[currentPageIndex]),
+          actions: <Widget>[ if (currentPageIndex == 1)
+            IconButton(
+              icon: Icon(isGridView ? Icons.list : Icons.grid_view),
+              onPressed: () {
+                setState(() {
+                  isGridView = !isGridView;
+                });
+              },
+            ),
+          ],
         ),
         bottomNavigationBar: NavigationBar(
           onDestinationSelected: (int index) {
@@ -43,40 +53,16 @@ class _ScreenState extends State<Screen> {
           const CategoryListScreen(),
           isGridView ? const ProductGridScreen() : const ProductListScreen(),
         ][currentPageIndex],
-        floatingActionButton: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            if (currentPageIndex == 1) FloatingActionButton(
-              mini: true,
-              onPressed: () {
-                setState(() {
-                  isGridView = !isGridView;
-                });
-              },
-              child: Icon(isGridView ? Icons.list : Icons.grid_on),
-            ),
-            const SizedBox(height: 10),
-            if (currentPageIndex <= 1) FloatingActionButton(
-              onPressed: () {
-                Navigator.push(
-                  context, 
-                  MaterialPageRoute(builder: (context) => currentPageIndex == 0 ? const CategoryScreen(category: null) : const ProductScreen(product: null)),
-                );
-              },
-              child: const Icon(Icons.add),
-            ),
-          ],
-        )
-        // floatingActionButton: currentPageIndex <= 1 ? FloatingActionButton(
-        //   onPressed: () {
-        //     Navigator.push(
-        //       context,
-        //       MaterialPageRoute(builder: (context) => const CategoryScreen(category: null)),
-        //     );
-        //   },
+        floatingActionButton: currentPageIndex <= 1 ? FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => currentPageIndex == 0 ? const CategoryScreen(category: null) : const ProductScreen(product: null))
+            );
+          },
 
-        //   child: const Icon(Icons.add),
-        // ) : null,
+          child: const Icon(Icons.add),
+        ) : null,
       );
   }
 }

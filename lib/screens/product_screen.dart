@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:on_invent/data/category_data.dart';
+import 'package:on_invent/models/category.dart';
 import 'package:on_invent/models/product.dart';
 
 class ProductScreen extends StatefulWidget {
@@ -15,6 +17,20 @@ class ProductScreen extends StatefulWidget {
 class _ProductScreenState extends State<ProductScreen> {
   final imagePicker = ImagePicker();
   XFile? imageFile;
+  final categoryList = CategoryData().categories;
+  final categoriesOfProduct = [1,2,4];
+  List<Category> selectedCategories = [];
+
+  @override
+  void initState() {
+    super.initState();
+    for (var category in categoryList) {
+      if (categoriesOfProduct.contains(category.id)) {
+        selectedCategories.add(category);
+      }
+    }
+  }
+  
 
   void _getImage() async {
     final pickedFile = await imagePicker.pickImage(source: ImageSource.gallery);
@@ -86,6 +102,28 @@ class _ProductScreenState extends State<ProductScreen> {
                   }
                   return null;
                 },
+              ),
+              const SizedBox(height: 16),
+              Row( 
+                children: 
+                  List<Widget>.generate(
+                    categoryList.length,
+                    (index) => ChoiceChip(
+                      showCheckmark: false,
+                      label: Text(categoryList[index].name),
+                      avatar: Icon(IconData(categoryList[index].icon, fontFamily: 'MaterialIcons')),
+                      selected: selectedCategories.contains(categoryList[index]),
+                      onSelected: (selected) {
+                        setState(() {
+                          if (selected) {
+                            selectedCategories.add(categoryList[index]);
+                          } else {
+                            selectedCategories.remove(categoryList[index]);
+                          }
+                        });
+                      },
+                    ),
+                  ),
               ),
               const SizedBox(height: 16),
               Row(
