@@ -18,9 +18,12 @@ class _QuantityInputState extends State<QuantityInput> {
       children: [
         Text(widget.label, style: const TextStyle(fontWeight: FontWeight.bold)),
         Row(
+          
           children: [
             IconButton(onPressed: () => setState(()=> widget.quantity(--quantity)) , icon: const Icon(Icons.remove)),
+            const SizedBox(width: 10),
             Text(quantity.toString(), style: const TextStyle(fontSize: 20)),
+            const SizedBox(width: 10),
             IconButton(onPressed: () => setState(() => widget.quantity(++quantity)), icon: const Icon(Icons.add)),
           ],
         ),
