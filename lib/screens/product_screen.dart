@@ -58,6 +58,7 @@ class _ProductScreenState extends State<ProductScreen> {
           key: _formKey,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -119,9 +120,9 @@ class _ProductScreenState extends State<ProductScreen> {
                     children: [
                       ElevatedButton(
                         onPressed: _getImage,
-                        child: const Text('Select Image'),
+                        child: const Text('Seleccina una imagen'),
                       ),
-                      imageFile == null ? const Text('No image selected.') : Text(imageFile!.name),
+                      imageFile == null ? const Text('Ninguna imagen seleccionada.') : Text(imageFile!.name),
                     ],
                   ),
                   const SizedBox(height: 16),
@@ -149,35 +150,29 @@ class _ProductScreenState extends State<ProductScreen> {
                   ),
                 ],
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(backgroundColor: Colors.white, foregroundColor: Colors.black),
-                    onPressed: Navigator.of(context).pop, 
-                    child: const Text('Cancelar')
-                  ),
-                  const SizedBox(width: 8),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(backgroundColor: Theme.of(context).primaryColorDark, foregroundColor: Colors.white),
-                    onPressed: () {
-                      if(!_formKey.currentState!.validate()){return;}
-                      showDialog(
-                        context: context,
-                        builder: (context) => const InventaryDialog(),
-                      ).then((value) {
-                        if (widget.product != null) {
-                          // Update category
-                        } else {
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Theme.of(context).primaryColor,
+                  foregroundColor: Colors.white,
+                  minimumSize: const Size.fromHeight(50),
+                  shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
+                ),
+                onPressed: () {
+                  if(!_formKey.currentState!.validate()){return;}
+                  showDialog(
+                    context: context,
+                    builder: (context) => const InventaryDialog(),
+                  ).then((value) {
+                    if (widget.product != null) {
+                      // Update category
+                    } else {
 
-                        }
-                        Navigator.of(context).pop();
-                      });
-                    },
-                    child: Text(widget.product != null ? 'Guardar Cambios' : 'Guardar Producto'),
-                  )
-                ],
-              ),
+                    }
+                    Navigator.of(context).pop();
+                  });
+                },
+                child: Text(widget.product != null ? 'Guardar Cambios' : 'Guardar Producto'),
+              )
             ],
           ),
         ),

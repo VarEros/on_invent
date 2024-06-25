@@ -18,7 +18,8 @@ class _ScreenState extends State<Screen> {
   
   static const pages =  [
     'Categorias',
-    'Productos'
+    'Productos',
+    'Inventario'
   ];
   
   @override
@@ -47,11 +48,13 @@ class _ScreenState extends State<Screen> {
           destinations: const <Widget>[
             NavigationDestination(icon: Icon(Icons.category), label: 'Categorias'),
             NavigationDestination(icon: Icon(Icons.shopping_cart), label: 'Productos'),
+            NavigationDestination(icon: Icon(Icons.inventory), label: 'Inventario'),
           ],
         ),
         body: <Widget>[
           const CategoryListScreen(),
           isGridView ? const ProductGridScreen() : const ProductListScreen(),
+          const InvetaryListScreen(),
         ][currentPageIndex],
         floatingActionButton: currentPageIndex <= 1 ? FloatingActionButton(
           onPressed: () {
