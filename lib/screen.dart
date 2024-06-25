@@ -54,7 +54,6 @@ class _ScreenState extends State<Screen> {
         body: <Widget>[
           const CategoryListScreen(),
           isGridView ? const ProductGridScreen() : const ProductListScreen(),
-          const InvetaryListScreen(),
         ][currentPageIndex],
         floatingActionButton: currentPageIndex <= 1 ? FloatingActionButton(
           onPressed: () {

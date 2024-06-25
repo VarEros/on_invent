@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:on_invent/data/category_data.dart';
+import 'package:on_invent/data/prod_cat_data.dart';
 import 'package:on_invent/models/category.dart';
 import 'package:on_invent/models/product.dart';
 import 'package:on_invent/widgets/inventary_dialog.dart';
@@ -19,26 +20,18 @@ class _ProductScreenState extends State<ProductScreen> {
   final imagePicker = ImagePicker();
   final _formKey = GlobalKey<FormState>();
   XFile? imageFile;
+
   final categoryList = CategoryData().categories;
-  final categoriesOfProduct = [1,2,4];
+  final prodCatList = ProdCatData().prodCatList;
   List<Category> selectedCategories = [];
 
   @override
   void initState() {
     super.initState();
-    for (var category in categoryList) {
-      if (categoriesOfProduct.contains(category.id)) {
-        selectedCategories.add(category);
-      }
+      if (widget.product != null) {
+        final categoriesOfProduct = ProdCatData().prodCatList.where((element) => element.idProduct == widget.product!.id).map((e) => e.idCategory).toList();
+        selectedCategories = categoryList.where((element) => categoriesOfProduct.contains(element.id)).toList();
     }
-  }
-  
-
-  void _getImage() async {
-    final pickedFile = await imagePicker.pickImage(source: ImageSource.gallery);
-    setState(() {
-      imageFile = pickedFile;
-    });
   }
 
   @override
@@ -114,7 +107,8 @@ class _ProductScreenState extends State<ProductScreen> {
                       return null;
                     },
                     autovalidateMode: AutovalidateMode.onUserInteraction,
-                  ),const SizedBox(height: 16),
+                  ),
+                  const SizedBox(height: 16),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -178,5 +172,12 @@ class _ProductScreenState extends State<ProductScreen> {
         ),
       ),
     );
+  }
+
+  void _getImage() async {
+    final pickedFile = await imagePicker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      imageFile = pickedFile;
+    });
   }
 }

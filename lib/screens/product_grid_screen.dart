@@ -2,27 +2,42 @@ import 'package:flutter/material.dart';
 import 'package:on_invent/data/product_data.dart';
 import 'package:on_invent/widgets/product_card_widget.dart';
 
-class ProductGridScreen extends StatelessWidget {
+class ProductGridScreen extends StatefulWidget {
   const ProductGridScreen({ super.key });
-  
+
+  @override
+  State<ProductGridScreen> createState() => _ProductGridScreenState();
+}
+
+class _ProductGridScreenState extends State<ProductGridScreen> {
+  final productList = ProductData().products;
 
   @override
   Widget build(BuildContext context){
-    final productList = ProductData().products;
     final currentCount = (MediaQuery.of(context).size.width ~/ 300).toInt();
 
-    return GridView.builder(
-      padding: const EdgeInsets.only(left:16.0, right:16.0),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: currentCount,
-        childAspectRatio: 3/2,
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: [
+          const SearchBar(),
+          const SizedBox(height: 20),
+          GridView.builder(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: currentCount,
+                childAspectRatio: 3/2,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+              ),
+              itemCount: productList.length,
+              itemBuilder: (context, index) {
+                return ProductCardWidget(product: productList[index]);
+              },
+            ),
+        ],
       ),
-      itemCount: productList.length,
-      itemBuilder: (context, index) {
-        return ProductCardWidget(product: productList[index]);
-      },
     );
   }
 }
