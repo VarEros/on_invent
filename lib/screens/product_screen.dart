@@ -19,7 +19,6 @@ class ProductScreen extends StatefulWidget {
 class _ProductScreenState extends State<ProductScreen> {
   final imagePicker = ImagePicker();
   final _formKey = GlobalKey<FormState>();
-  bool formCompleted = false;
   XFile? imageFile;
 
   final categoryList = CategoryData().categories;
@@ -32,7 +31,6 @@ class _ProductScreenState extends State<ProductScreen> {
       if (widget.product != null) {
         final categoriesOfProduct = ProdCatData().prodCatList.where((element) => element.idProduct == widget.product!.id).map((e) => e.idCategory).toList();
         selectedCategories = categoryList.where((element) => categoriesOfProduct.contains(element.id)).toList();
-        formCompleted = true;
     }
   }
 
