@@ -19,6 +19,7 @@ class ProductScreen extends StatefulWidget {
 class _ProductScreenState extends State<ProductScreen> {
   final imagePicker = ImagePicker();
   final _formKey = GlobalKey<FormState>();
+  bool formCompleted = false;
   XFile? imageFile;
 
   final categoryList = CategoryData().categories;
@@ -31,6 +32,7 @@ class _ProductScreenState extends State<ProductScreen> {
       if (widget.product != null) {
         final categoriesOfProduct = ProdCatData().prodCatList.where((element) => element.idProduct == widget.product!.id).map((e) => e.idCategory).toList();
         selectedCategories = categoryList.where((element) => categoriesOfProduct.contains(element.id)).toList();
+        formCompleted = true;
     }
   }
 
@@ -147,23 +149,25 @@ class _ProductScreenState extends State<ProductScreen> {
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Theme.of(context).primaryColor,
-                  foregroundColor: Colors.white,
+                  foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                  disabledBackgroundColor: Theme.of(context).disabledColor,
+                  disabledForegroundColor: Theme.of(context).colorScheme.onPrimary,
                   minimumSize: const Size.fromHeight(50),
                   shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
                 ),
-                onPressed: () {
-                  if(!_formKey.currentState!.validate()){return;}
-                  showDialog(
-                    context: context,
-                    builder: (context) => const InventaryDialog(),
-                  ).then((value) {
-                    if (widget.product != null) {
-                      // Update category
-                    } else {
 
-                    }
-                    Navigator.of(context).pop();
-                  });
+                onPressed: () { 
+                    !(_formKey.currentState!.validate()) ? null : showDialog(
+                      context: context,
+                      builder: (context) => const InventaryDialog(),
+                    ).then((value) {
+                      if (widget.product != null) {
+                        // Update category
+                      } else {
+
+                      }
+                      Navigator.of(context).pop();
+                    });
                 },
                 child: Text(widget.product != null ? 'Guardar Cambios' : 'Guardar Producto'),
               )
