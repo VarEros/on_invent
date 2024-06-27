@@ -10,6 +10,7 @@ class InventaryDialog extends StatelessWidget {
 
     return AlertDialog(
       title: const Text('Añadir Inventario'),
+      
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -45,8 +46,7 @@ class InventaryDialog extends StatelessWidget {
           child: const Text('Cancelar'),
         ),
         TextButton(
-          onPressed: () {
-          },
+          onPressed: () => Navigator.of(context).pop(inventary),
           child: const Text('Añadir'),
         ),
       ],

@@ -53,6 +53,38 @@ class _ProductScreenState extends State<ProductScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.product != null ? 'Editar Producto' : 'Agregar Producto'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.delete),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    title: const Text('Eliminar Producto'),
+                    content: const Text('¿Estás seguro de que deseas eliminar este producto?'),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.of(context).pop(false),
+                        child: const Text('Cancelar'),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          // Delete product
+                          Navigator.of(context).pop(true);
+                        },
+                        child: const Text('Eliminar'),
+                      ),
+                    ],
+                  );
+                },
+              ).then((value) {
+                if (value) {
+                  Navigator.of(context).pop();
+                }
+              });
+            },
+          )],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -157,12 +189,12 @@ class _ProductScreenState extends State<ProductScreen> {
                   ),
                 ],
               ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Theme.of(context).primaryColor,
-                  foregroundColor: Theme.of(context).colorScheme.onPrimary,
-                  disabledBackgroundColor: Theme.of(context).disabledColor,
-                  disabledForegroundColor: Theme.of(context).colorScheme.onPrimary,
+              FilledButton(
+                style: FilledButton.styleFrom(
+                  // backgroundColor: Theme.of(context).primaryColor,
+                  // foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                  // disabledBackgroundColor: Theme.of(context).disabledColor,
+                  // disabledForegroundColor: Theme.of(context).colorScheme.onPrimary,
                   minimumSize: const Size.fromHeight(50),
                   shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
                 ),
@@ -181,6 +213,7 @@ class _ProductScreenState extends State<ProductScreen> {
       context: context,
       builder: (context) => const InventaryDialog(),
     ).then((value) {
+      if (value == null) return;
       if (widget.product != null) {
         // Update category
       } else {

@@ -8,21 +8,23 @@ class ProductCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context){
-    return Container(
-     decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            color: Theme.of(context).shadowColor.withOpacity(0.2),
-            spreadRadius: 2,
-            blurRadius: 5,
-            offset: const Offset(4, 4),
-          ),
-        ],
-      ),
-      child: InkResponse(
+    return GestureDetector(
+      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ProductScreen(product: product))),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Theme.of(context).cardColor,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Theme.of(context).shadowColor.withOpacity(0.2),
+              spreadRadius: 2,
+              blurRadius: 5,
+              offset: const Offset(4, 4),
+            ),
+          ],
+        ),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(16),
           child: GridTile(
             footer: GridTileBar(
               backgroundColor: Theme.of(context).dialogBackgroundColor,
@@ -32,7 +34,6 @@ class ProductCardWidget extends StatelessWidget {
             child: Image.asset(product.imageUrl, fit: BoxFit.cover), 
           ),
         ),
-        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ProductScreen(product: product))),
       ),
     );
   }
