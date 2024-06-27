@@ -34,7 +34,7 @@ class _ProductGridScreenState extends State<ProductGridScreen> {
             SearchBar(
               leading: const Icon(Icons.search),
               controller: controler, 
-              hintText: 'Buscar producto',
+              hintText: 'Buscar producto...',
               // elevation: WidgetStatePropertyAll(0.0),
               onChanged: (value) {
                 setState(() {

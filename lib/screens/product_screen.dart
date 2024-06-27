@@ -18,28 +18,37 @@ class ProductScreen extends StatefulWidget {
 
 class _ProductScreenState extends State<ProductScreen> {
   final imagePicker = ImagePicker();
-  final _formKey = GlobalKey<FormState>();
   XFile? imageFile;
+
+  final _formKey = GlobalKey<FormState>();
+  bool enableButton = false;
 
   final categoryList = CategoryData().categories;
   final prodCatList = ProdCatData().prodCatList;
   List<Category> selectedCategories = [];
 
+  String name = '';
+  String description = '';
+  int buyingPrice = 0;
+  int sellingPrice = 0;
+
   @override
   void initState() {
     super.initState();
       if (widget.product != null) {
+        name = widget.product!.name;
+        description = widget.product!.description;
+        buyingPrice = widget.product!.buyingPrice;
+        sellingPrice = widget.product!.sellingPrice;
+
         final categoriesOfProduct = ProdCatData().prodCatList.where((element) => element.idProduct == widget.product!.id).map((e) => e.idCategory).toList();
         selectedCategories = categoryList.where((element) => categoriesOfProduct.contains(element.id)).toList();
+        enableButton = true;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    String name = '';
-    String description = '';
-    int buyingPrice = 0;
-    int sellingPrice = 0;
 
     return Scaffold(
       appBar: AppBar(
@@ -49,6 +58,7 @@ class _ProductScreenState extends State<ProductScreen> {
         padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
+          onChanged: () => setState(() => enableButton = _formKey.currentState!.validate()),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.end,
@@ -57,7 +67,7 @@ class _ProductScreenState extends State<ProductScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TextFormField(
-                    initialValue: widget.product != null ? widget.product!.name : '',
+                    initialValue: name,
                     onChanged: (value) => name = value,
                     decoration: const InputDecoration(
                       labelText: 'Nombre',
@@ -67,7 +77,7 @@ class _ProductScreenState extends State<ProductScreen> {
                   ),
                   const SizedBox(height: 16),
                   TextFormField(
-                    initialValue: widget.product != null ? widget.product!.description : '',
+                    initialValue: description,
                     onChanged: (value) => description = value,
                     decoration: const InputDecoration(
                       labelText: 'Descripción',
@@ -77,8 +87,10 @@ class _ProductScreenState extends State<ProductScreen> {
                   ),
                   const SizedBox(height: 16),
                   TextFormField(
-                    initialValue: widget.product != null ? widget.product!.buyingPrice.toString() : '',
-                    onChanged: (value) => buyingPrice = int.tryParse(value) ?? 0,
+                    initialValue: buyingPrice == 0 ? '' : buyingPrice.toString(),
+                    onChanged: (value) {
+                      buyingPrice = int.tryParse(value) ?? 0;
+                    },
                     decoration: const InputDecoration(
                       labelText: 'Precio de compra',
                       suffix: Text('C\$')
@@ -90,7 +102,7 @@ class _ProductScreenState extends State<ProductScreen> {
                   ),
                   const SizedBox(height: 16),
                   TextFormField(
-                    initialValue: widget.product != null ? widget.product!.sellingPrice.toString() : '',
+                    initialValue: sellingPrice == 0 ? '' : sellingPrice.toString(),
                     onChanged: (value) => sellingPrice = int.tryParse(value) ?? 0,
                     decoration: const InputDecoration(
                       labelText: 'Precio de venta',
@@ -101,12 +113,13 @@ class _ProductScreenState extends State<ProductScreen> {
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'Por favor, ingrese un precio de venta';
-                      } else if (int.parse(value) <= buyingPrice) {
+                      } else if (int.parse(value) < buyingPrice) {
+                        enableButton = false;
                         return 'El precio de venta debe ser mayor al precio de compra';
                       }
                       return null;
                     },
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    autovalidateMode: AutovalidateMode.always,
                   ),
                   const SizedBox(height: 16),
                   Row(
@@ -153,20 +166,7 @@ class _ProductScreenState extends State<ProductScreen> {
                   minimumSize: const Size.fromHeight(50),
                   shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
                 ),
-
-                onPressed: () { 
-                    !(_formKey.currentState!.validate()) ? null : showDialog(
-                      context: context,
-                      builder: (context) => const InventaryDialog(),
-                    ).then((value) {
-                      if (widget.product != null) {
-                        // Update category
-                      } else {
-
-                      }
-                      Navigator.of(context).pop();
-                    });
-                },
+                onPressed: enableButton ? saveProduct : null,
                 child: Text(widget.product != null ? 'Guardar Cambios' : 'Guardar Producto'),
               )
             ],
@@ -174,6 +174,20 @@ class _ProductScreenState extends State<ProductScreen> {
         ),
       ),
     );
+  }
+
+  void saveProduct () {
+    showDialog(
+      context: context,
+      builder: (context) => const InventaryDialog(),
+    ).then((value) {
+      if (widget.product != null) {
+        // Update category
+      } else {
+
+      }
+      Navigator.of(context).pop();
+    });
   }
 
   void _getImage() async {
