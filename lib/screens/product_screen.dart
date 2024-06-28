@@ -191,10 +191,6 @@ class _ProductScreenState extends State<ProductScreen> {
               ),
               FilledButton(
                 style: FilledButton.styleFrom(
-                  // backgroundColor: Theme.of(context).primaryColor,
-                  // foregroundColor: Theme.of(context).colorScheme.onPrimary,
-                  // disabledBackgroundColor: Theme.of(context).disabledColor,
-                  // disabledForegroundColor: Theme.of(context).colorScheme.onPrimary,
                   minimumSize: const Size.fromHeight(50),
                   shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
                 ),
@@ -209,18 +205,23 @@ class _ProductScreenState extends State<ProductScreen> {
   }
 
   void saveProduct () {
-    showDialog(
-      context: context,
-      builder: (context) => const InventaryDialog(),
-    ).then((value) {
-      if (value == null) return;
-      if (widget.product != null) {
-        // Update category
-      } else {
-
-      }
+    if (widget.product != null) {
+      // Update product
       Navigator.of(context).pop();
-    });
+    } else {
+      showDialog(
+        context: context, 
+        builder: (context) => const InventaryDialog()
+      ).then(
+        (value) {
+          if (value != null) {
+            
+          } else {
+            Navigator.of(context).pop();
+          }
+        }
+      );
+    }
   }
 
   void _getImage() async {

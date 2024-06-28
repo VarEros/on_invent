@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:on_invent/screens/category_list_screen.dart';
 import 'package:on_invent/screens/category_screen.dart';
 import 'package:on_invent/screens/product_grid_screen.dart';
-import 'package:on_invent/screens/product_list_screen.dart';
 import 'package:on_invent/screens/product_screen.dart';
+import 'package:on_invent/utils/utils.dart';
 
 class Screen extends StatefulWidget {
   const Screen({super.key});
@@ -14,7 +14,7 @@ class Screen extends StatefulWidget {
 
 class _ScreenState extends State<Screen> {
   int currentPageIndex = 1;
-  bool isGridView = true;
+  Utils utils = Utils();
   
   static const pages =  [
     'Categorias',
@@ -29,10 +29,10 @@ class _ScreenState extends State<Screen> {
           title: Text(pages[currentPageIndex]),
           actions: <Widget>[ if (currentPageIndex == 1)
             IconButton(
-              icon: Icon(isGridView ? Icons.list : Icons.grid_view),
+              icon: Icon(utils.isGridView ? Icons.list : Icons.grid_view),
               onPressed: () {
                 setState(() {
-                  isGridView = !isGridView;
+                  utils.changeView();
                 });
               },
             ),
@@ -53,7 +53,7 @@ class _ScreenState extends State<Screen> {
         ),
         body: <Widget>[
           const CategoryListScreen(),
-          isGridView ? const ProductGridScreen() : const ProductListScreen(),
+          ProductGridScreen(utils: utils),
         ][currentPageIndex],
         floatingActionButton: currentPageIndex <= 1 ? FloatingActionButton(
           onPressed: () {
