@@ -8,4 +8,12 @@ class Utils extends ChangeNotifier {
     _isGridView = !_isGridView;
     notifyListeners();
   }
+
+  List<int> _categoriesSelected = [];
+  get categoriesSelected => _categoriesSelected;
+
+  void setSelectedCategories(List<int> categories) {
+    _categoriesSelected = categories;
+    notifyListeners();
+  }
 }

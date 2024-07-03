@@ -4,6 +4,7 @@ import 'package:on_invent/screens/category_screen.dart';
 import 'package:on_invent/screens/product_list_screen.dart';
 import 'package:on_invent/screens/product_screen.dart';
 import 'package:on_invent/utils/utils.dart';
+import 'package:on_invent/widgets/filter_dialog.dart';
 
 class Screen extends StatefulWidget {
   const Screen({super.key});
@@ -29,11 +30,14 @@ class _ScreenState extends State<Screen> {
           title: Text(pages[currentPageIndex]),
           actions: <Widget>[ if (currentPageIndex == 1)
             IconButton(
-              icon: Icon(utils.isGridView ? Icons.list : Icons.grid_view),
+              icon: const Icon(Icons.filter_list),
               onPressed: () {
-                setState(() {
-                  utils.changeView();
-                });
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return FilterDialog(utils: utils);
+                  },
+                );
               },
             ),
           ],
@@ -55,16 +59,30 @@ class _ScreenState extends State<Screen> {
           const CategoryListScreen(),
           ProductListScreen(utils: utils),
         ][currentPageIndex],
-        floatingActionButton: currentPageIndex <= 1 ? FloatingActionButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => currentPageIndex == 0 ? const CategoryScreen(category: null) : const ProductScreen(product: null))
-            );
-          },
-
-          child: const Icon(Icons.add),
-        ) : null,
+        floatingActionButton: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            if (currentPageIndex == 1) FloatingActionButton(
+              mini: true,
+              onPressed: () {
+                setState(() {
+                  utils.changeView();
+                });
+              },
+              child: Icon(utils.isGridView ? Icons.list : Icons.grid_view),
+            ),
+            const SizedBox(height: 10),
+            if (currentPageIndex <= 1) FloatingActionButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => currentPageIndex == 0 ? const CategoryScreen(category: null) : const ProductScreen(product: null)),
+                );
+              },
+              child: const Icon(Icons.add),
+            ),
+          ],
+        )
       );
   }
 }

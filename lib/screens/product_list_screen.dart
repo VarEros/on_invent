@@ -37,66 +37,17 @@ class _ProductListScreenState extends State<ProductListScreen> {
       margin: const EdgeInsets.all(8.0),
       child: Column(
         children: [
-          Row(
-            children: [
-              SearchBar(
-                leading: const Icon(Icons.search),
-                controller: controler, 
-                hintText: 'Buscar producto...',
-                onChanged: (value) {
-                  setState(() {
-                    final searchText = controler.text;
-                    searchText.isEmpty ? filteredList = productList : filteredList = productList.where((element) => element.name.toLowerCase().contains(searchText.toLowerCase())).toList();
-                  });
-                },
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: const Size.fromHeight(68),
-                    shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(70)),
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      filteredList = productList;
-                      controler.clear();
-                      selectedCategories.clear();
-                    });
-                  }, 
-                  child: const Row(
-                    children: [
-                      Icon(Icons.filter),
-                      Text('Agregar Filtro'),
-                    ],
-                  ),
-                ),
-              )
-            ],
+          SearchBar(
+            leading: const Icon(Icons.search),
+            controller: controler, 
+            hintText: 'Buscar producto...',
+            onChanged: (value) {
+              setState(() {
+                final searchText = controler.text;
+                searchText.isEmpty ? filteredList = productList : filteredList = productList.where((element) => element.name.toLowerCase().contains(searchText.toLowerCase())).toList();
+              });
+            },
           ),
-          // const SizedBox(height: 10),
-          // Wrap( 
-          //   spacing: 8.0, 
-          //   children: 
-          //     List<Widget>.generate(
-          //       categoryList.length,
-          //       (index) => ChoiceChip(
-          //         showCheckmark: false,
-          //         label: Text(categoryList[index].name),
-          //         avatar: Icon(IconData(categoryList[index].icon, fontFamily: 'MaterialIcons')),
-          //         selected: selectedCategories.contains(categoryList[index]),
-          //         onSelected: (selected) {
-          //           setState(() {
-          //             if (selected) {
-          //               selectedCategories.add(categoryList[index]);
-          //             } else {
-          //               selectedCategories.remove(categoryList[index]);
-          //             }
-          //           });
-          //         },
-          //       ),
-          //     ),
-          // ),
           const SizedBox(height: 20),
           Expanded(
             child: ListenableBuilder(
