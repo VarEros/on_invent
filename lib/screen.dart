@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:on_invent/screens/category_list_screen.dart';
 import 'package:on_invent/screens/category_screen.dart';
-import 'package:on_invent/screens/product_grid_screen.dart';
+import 'package:on_invent/screens/product_list_screen.dart';
 import 'package:on_invent/screens/product_screen.dart';
 import 'package:on_invent/utils/utils.dart';
 
@@ -53,7 +53,7 @@ class _ScreenState extends State<Screen> {
         ),
         body: <Widget>[
           const CategoryListScreen(),
-          ProductGridScreen(utils: utils),
+          ProductListScreen(utils: utils),
         ][currentPageIndex],
         floatingActionButton: currentPageIndex <= 1 ? FloatingActionButton(
           onPressed: () {
