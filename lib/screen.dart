@@ -63,6 +63,7 @@ class _ScreenState extends State<Screen> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             if (currentPageIndex == 1) FloatingActionButton(
+              heroTag: 'changeView',
               mini: true,
               onPressed: () {
                 setState(() {
@@ -73,6 +74,7 @@ class _ScreenState extends State<Screen> {
             ),
             const SizedBox(height: 10),
             if (currentPageIndex <= 1) FloatingActionButton(
+              heroTag: 'add',
               onPressed: () {
                 Navigator.push(
                   context,

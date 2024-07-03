@@ -25,28 +25,24 @@ class _FilterDialogState extends State<FilterDialog> {
   Widget build(BuildContext context){
     return AlertDialog(
       title: const Text('Filtrar Productos'),
-      content: Column(
-        children: [
-          const Text('Categorias'),
-          Wrap(
-            spacing: 8.0,
-            children: categoryList.map((category) {
-              return FilterChip(
-                label: Text(category.name),
-                selected: categoriesSelected.contains(category.id),
-                onSelected: (bool selected) {
-                  setState(() {
-                    if (selected) {
-                      categoriesSelected.add(category.id);
-                    } else {
-                      categoriesSelected.remove(category.id);
-                    }
-                  });
-                },
-              );
-            }).toList(),
-          ),
-        ],
+      content: Wrap(
+        spacing: 8.0,
+        runSpacing: 4.0,
+        children: categoryList.map((category) {
+          return FilterChip(
+            label: Text(category.name),
+            selected: categoriesSelected.contains(category.id),
+            onSelected: (bool selected) {
+              setState(() {
+                if (selected) {
+                  categoriesSelected.add(category.id);
+                } else {
+                  categoriesSelected.remove(category.id);
+                }
+              });
+            },
+          );
+        }).toList(),
       ),
       actions: [
         TextButton(

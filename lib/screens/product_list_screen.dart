@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:on_invent/data/category_data.dart';
+import 'package:on_invent/data/prod_cat_data.dart';
 import 'package:on_invent/data/product_data.dart';
 import 'package:on_invent/models/category.dart';
+import 'package:on_invent/models/prod_cat.dart';
 import 'package:on_invent/models/product.dart';
 import 'package:on_invent/utils/utils.dart';
 import 'package:on_invent/widgets/product_card_widget.dart';
@@ -19,7 +21,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
   final productList = ProductData().products;
   late List<Product> filteredList;
   final List<Category> categoryList = CategoryData().categories;
-  List<Category> selectedCategories = [];
+  final List<ProdCat> prodCatList = ProdCatData().prodCatList;
   late TextEditingController controler;
 
   @override
@@ -27,6 +29,12 @@ class _ProductListScreenState extends State<ProductListScreen> {
     controler = TextEditingController();
     filteredList = productList;
     super.initState();
+  }
+
+  filterBySearch (String searchText) {
+    setState(() {
+      searchText.isEmpty ? filteredList = productList : filteredList = productList.where((element) => element.name.toLowerCase().contains(searchText.toLowerCase())).toList();
+    });
   }
 
   @override
@@ -42,10 +50,8 @@ class _ProductListScreenState extends State<ProductListScreen> {
             controller: controler, 
             hintText: 'Buscar producto...',
             onChanged: (value) {
-              setState(() {
-                final searchText = controler.text;
-                searchText.isEmpty ? filteredList = productList : filteredList = productList.where((element) => element.name.toLowerCase().contains(searchText.toLowerCase())).toList();
-              });
+              if (value == '') return;
+              filterBySearch(value);
             },
           ),
           const SizedBox(height: 20),
@@ -53,6 +59,16 @@ class _ProductListScreenState extends State<ProductListScreen> {
             child: ListenableBuilder(
               listenable: widget.utils,
               builder: (BuildContext context, Widget? child) { 
+                if (!widget.utils.categoriesSelected.isEmpty) {
+                  List<Product> prodListFiltered = productList;
+                  for (var categorySelected in widget.utils.categoriesSelected) {
+                    final prodCatListFiltered = prodCatList.where((prodCat) => prodCat.idCategory == categorySelected).toList();
+                    prodListFiltered = prodListFiltered.where((prod) => prodCatListFiltered.map((e) => e.idProduct).contains(prod.id)).toList();
+                  }
+                  filteredList = prodListFiltered;
+                } else {
+                  filteredList = productList;
+                }
                 if (widget.utils.isGridView) {
                   return GridView.builder(
                     scrollDirection: Axis.vertical,
