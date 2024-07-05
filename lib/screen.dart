@@ -4,7 +4,7 @@ import 'package:on_invent/screens/category_screen.dart';
 import 'package:on_invent/screens/product_list_screen.dart';
 import 'package:on_invent/screens/product_screen.dart';
 import 'package:on_invent/utils/utils.dart';
-import 'package:on_invent/widgets/filter_dialog.dart';
+import 'package:on_invent/widgets/dialog/filter_dialog.dart';
 
 class Screen extends StatefulWidget {
   const Screen({super.key});

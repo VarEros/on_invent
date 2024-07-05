@@ -6,7 +6,7 @@ import 'package:on_invent/data/category_data.dart';
 import 'package:on_invent/data/prod_cat_data.dart';
 import 'package:on_invent/models/category.dart';
 import 'package:on_invent/models/product.dart';
-import 'package:on_invent/widgets/inventary_dialog.dart';
+import 'package:on_invent/widgets/dialog/inventary_dialog.dart';
 
 class ProductScreen extends StatefulWidget {
   final Product? product;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../models/category.dart';
-import '../screens/category_screen.dart';
+import '../../models/category.dart';
+import '../../screens/category_screen.dart';
 
 class CategoryElemWidget extends StatelessWidget {
   final Category category;

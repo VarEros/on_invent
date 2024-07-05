@@ -6,8 +6,8 @@ import 'package:on_invent/models/category.dart';
 import 'package:on_invent/models/prod_cat.dart';
 import 'package:on_invent/models/product.dart';
 import 'package:on_invent/utils/utils.dart';
-import 'package:on_invent/widgets/product_card_widget.dart';
-import 'package:on_invent/widgets/product_elem_widget.dart';
+import 'package:on_invent/widgets/element/product_card_widget.dart';
+import 'package:on_invent/widgets/element/product_elem_widget.dart';
 
 class ProductListScreen extends StatefulWidget {
   final Utils utils;

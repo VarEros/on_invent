@@ -4,7 +4,8 @@ import 'package:on_invent/screens/product_screen.dart';
 
 class ProductCardWidget extends StatelessWidget {
   final Product product;
-  const ProductCardWidget({ super.key, required this.product});
+  final bool isInventary;
+  const ProductCardWidget({ super.key, required this.product, this.isInventary = false});
 
   @override
   Widget build(BuildContext context){
