@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:on_invent/models/product.dart';
 import 'package:on_invent/screens/category_list_screen.dart';
 import 'package:on_invent/screens/category_screen.dart';
 import 'package:on_invent/screens/product_list_screen.dart';
@@ -16,12 +15,10 @@ class Screen extends StatefulWidget {
 }
 
 class _ScreenState extends State<Screen> {
-  int currentPageIndex = 1;
-  bool isLoaded = false;
   Utils utils = Utils();
   ProductService productService = ProductService();
-  final List<Product> products = [];
   
+  int currentPageIndex = 1;
   static const pages =  [
     'Categorias',
     'Productos',
@@ -31,10 +28,7 @@ class _ScreenState extends State<Screen> {
   @override
   void initState() {
     super.initState();
-    productService.getProducts().then((value) {
-      products.addAll(value);
-      setState(() => isLoaded = true);
-    });
+    productService.getProducts();
   }
 
   @override
@@ -71,7 +65,7 @@ class _ScreenState extends State<Screen> {
         ),
         body: <Widget>[
           const CategoryListScreen(),
-          ProductListScreen(utils: utils),
+          ProductListScreen(utils: utils, productService: productService),
         ][currentPageIndex],
         floatingActionButton: Column(
           mainAxisAlignment: MainAxisAlignment.end,
