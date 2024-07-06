@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:on_invent/models/product.dart';
 import 'package:on_invent/screens/category_list_screen.dart';
 import 'package:on_invent/screens/category_screen.dart';
 import 'package:on_invent/screens/product_list_screen.dart';
 import 'package:on_invent/screens/product_screen.dart';
+import 'package:on_invent/services/product_service.dart';
 import 'package:on_invent/utils/utils.dart';
 import 'package:on_invent/widgets/dialog/filter_dialog.dart';
 
@@ -15,14 +17,26 @@ class Screen extends StatefulWidget {
 
 class _ScreenState extends State<Screen> {
   int currentPageIndex = 1;
+  bool isLoaded = false;
   Utils utils = Utils();
+  ProductService productService = ProductService();
+  final List<Product> products = [];
   
   static const pages =  [
     'Categorias',
     'Productos',
     'Inventario'
   ];
-  
+
+  @override
+  void initState() {
+    super.initState();
+    productService.getProducts().then((value) {
+      products.addAll(value);
+      setState(() => isLoaded = true);
+    });
+  }
+
   @override
   Widget build(BuildContext context){
     return Scaffold(
